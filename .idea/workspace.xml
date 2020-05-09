@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac3270a8-43f7-42b6-8f62-0495c10a516d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/onePerson.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/subdir/test biden.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -11,35 +14,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/trial.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="204">
-                    <caret line="12" column="48" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="48" />
-                    <folding>
-                      <element signature="e#0#21#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="82" column="52" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="52" />
+            <state relative-caret-position="1732">
+              <caret line="109" column="14" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="14" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -50,8 +31,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utility.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="43" column="12" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
+            <state relative-caret-position="399">
+              <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://C:/Python38-32/Lib/shutil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="748">
+              <caret line="49" column="5" lean-forward="true" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -72,7 +65,6 @@
       <find>buton</find>
       <find>warn</find>
       <find>resize</find>
-      <find>print</find>
       <find>imageDict</find>
       <find>random assortment</find>
       <find>face_recognition</find>
@@ -83,6 +75,20 @@
       <find>radio</find>
       <find>list of</find>
       <find>dict</find>
+      <find>set</find>
+      <find>encoding</find>
+      <find>update</find>
+      <find>upload face</find>
+      <find>destr</find>
+      <find>user_name_input</find>
+      <find>destroy</find>
+      <find>user_name_list_label</find>
+      <find>compare_faces</find>
+      <find>sort image!</find>
+      <find>input_set</find>
+      <find>split</find>
+      <find>print</find>
+      <find>except</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -105,8 +111,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1281" />
-    <option name="width" value="1284" />
+    <option name="x" value="1273" />
+    <option name="width" value="1294" />
     <option name="height" value="1407" />
   </component>
   <component name="ProjectView">
@@ -280,10 +286,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1281" y="0" width="1284" height="1407" extended-state="0" />
+    <frame x="1273" y="0" width="1294" height="1407" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1789727" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17754777" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -301,6 +307,17 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/utility.py</url>
+          <line>57</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/window/__init__.py" />
@@ -324,32 +341,56 @@
     <entry file="file://$PROJECT_DIR$/window.py" />
     <entry file="file://C:/Python38-32/Lib/site-packages/face_recognition/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="926">
-          <caret line="107" column="4" selection-start-line="107" selection-start-column="4" selection-end-line="107" selection-end-column="4" />
+        <state relative-caret-position="773">
+          <caret line="221" column="33" selection-start-line="221" selection-start-column="11" selection-end-line="221" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utility.py">
+    <entry file="file://C:/Python38-32/Lib/imghdr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="12" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://C:/Python38-32/Lib/site-packages/numpy/linalg/linalg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="82" column="52" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="52" />
+        <state relative-caret-position="238">
+          <caret line="2459" selection-start-line="2459" selection-end-line="2459" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="76" selection-start-line="15" selection-start-column="76" selection-end-line="15" selection-end-column="76" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trial.py">
+    <entry file="file://C:/Python38-32/Lib/shutil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="48" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="48" />
+        <state relative-caret-position="748">
+          <caret line="49" column="5" lean-forward="true" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1732">
+          <caret line="109" column="14" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="14" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

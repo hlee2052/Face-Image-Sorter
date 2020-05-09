@@ -43,16 +43,19 @@ class mainWindow:
         # do not create directory until directory can be created
 
         # dictionary of (username, user's folder path)
-        destination_path = []
+        destination_path = {}
         newly_created_folders = []
 
         for key in self.imageDict:
             new_folder_path = self.directory + "/" + key
             if not os.path.isdir(new_folder_path):
                 os.mkdir(new_folder_path)
-                destination_path.append({key, new_folder_path})
+                destination_path.update({key: new_folder_path})
                 newly_created_folders.append(key)
             else:
+                destination_path.update({key: new_folder_path})
+
+                """
                 # try make new folder but do let user know
                 i = 20
                 for num in range(0, i):
@@ -60,11 +63,12 @@ class mainWindow:
                     if not os.path.isdir(new_folder_path):
                         os.mkdir(new_folder_path)
                         # folder_new_dirs.append(key+str(num))
-                        destination_path.append({key: new_folder_path})
+                        destination_path.update({key: new_folder_path})
                         newly_created_folders.append(key + str(num))
                         break
                     if num == i - 1:
                         messagebox.showinfo('Error', "Please re-upload face with unique folder name")
+                 """
 
         """
         if the image has 2 or more faces:
@@ -72,15 +76,11 @@ class mainWindow:
         option = 2 --> copy image to just 1 of them
         """
 
-        for subdir, dirs, files in os.walk(self.directory):
+        for currPath, dirs, files in os.walk(self.directory):
             for file in files:
-                # print os.path.join(subdir, file)
-                filepath = subdir + os.sep + file
-                if (imghdr.what(filepath) is not None):
-                    print(filepath)
-                    print(imghdr.what(filepath))
-
-                    move_file(option, self.imageDict, filepath, destination_path, self.user_name_list)
+                filepath = os.path.join(currPath, file)
+                if imghdr.what(filepath) is not None:
+                    move_file(option, self.imageDict, filepath, destination_path, self.user_names_string)
 
         new_dirs_string = ""
         for item in newly_created_folders:
@@ -171,7 +171,7 @@ class mainWindow:
         generate input box
         """
         ## this is for keep track of inputs
-        user_name_input = []
+        self.user_name_input = []
 
         # frame for name inputs
         frame_name_input = Frame(self.popUp)
@@ -181,13 +181,13 @@ class mainWindow:
             label.grid(row=i, column=0, sticky=W)
             entry = Entry(frame_name_input)
             entry.grid(row=i, column=1, sticky=W)
-            user_name_input.append(entry)
+            self.user_name_input.append(entry)
 
         frame_name_input.grid(row=curr_row, column=0, sticky=W)
         curr_row += 1
 
         Button(self.popUp, text='Okay!!!!',
-               command=lambda: self.submit_name(user_name_input, encodings)) \
+               command=lambda: self.submit_name(self.user_name_input, encodings)) \
             .grid(row=curr_row)
 
         self.popUp.grab_set()
@@ -201,8 +201,11 @@ class mainWindow:
 
     def submit_name(self, user_name_input, image_encodings):
         input_set = set()
+
+        tmp_user_list = []
         for item in user_name_input:
             current_input = item.get()
+            # print(current_input)
 
             if not current_input:
                 messagebox.showinfo('Error', "Name should not be empty!")
@@ -210,10 +213,15 @@ class mainWindow:
             if current_input in input_set:
                 messagebox.showinfo('Error', "Name should be unique!!!")
                 return
-            input_set.add(current_input)
+            tmp_user_list.append(current_input)
 
-        for name in self.user_name_list:
+            self.user_names_string.append(current_input)
+
+        for name in self.user_name_list_label:
             name.destroy()
+
+        self.imageDict = {}
+        self.user_names_string = tmp_user_list;
 
         # better to separate into another loop
         for i in range(len(user_name_input)):
@@ -221,7 +229,7 @@ class mainWindow:
 
             each_entry = Label(root, text=user_name_input[i].get(), font=TITLE_FONT)
             each_entry.grid(row=3 + i, column=1, sticky=W)
-            self.user_name_list.append(each_entry)
+            self.user_name_list_label.append(each_entry)
 
             pass
         self.popUp.destroy()
@@ -252,7 +260,8 @@ class mainWindow:
         upload_button = Button(root, text='Upload Face', command=self.upload_face_image)
         upload_button.grid()
 
-        self.user_name_list = []
+        self.user_name_list_label = []
+        self.user_name_input = []
 
         self.random = Label(root, text='List of faces:', font=TITLE_FONT)
         self.random.grid(row=2, column=1, sticky=N)
@@ -279,6 +288,8 @@ class mainWindow:
 
         submit_button = Button(root, text='sort image!', command=self.sort_image)
         submit_button.grid(row=10, column=2, sticky=W)
+
+        self.user_names_string = []
 
 
 root = Tk()
