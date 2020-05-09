@@ -1,11 +1,11 @@
 from tkinter import *
 import tkinter.font as tkFont
-
+import imghdr
 import PIL
 from PIL import ImageTk, Image
 from tkinter import filedialog, messagebox
 
-import face_recognition
+import face_recognition, os
 
 from src.utility import *
 
@@ -24,10 +24,77 @@ color_map = {0: 'red', 1: 'blue', 2: 'green'}
 
 class mainWindow:
 
-    def upload_face_image(self):
-        print(self.imageDict)
-        filename = filedialog.askopenfilename()
+    def sort_image(self):
+        option = self.radio_response.get()
 
+        """
+        if option == 0:
+            messagebox.showinfo('Error', "Please select an option to see if duplicate is allowed")
+            return
+        if not self.directory:
+            messagebox.showinfo('Error', "Choose a directory with images")
+            return
+
+        if len(self.imageDict) == 0:
+            messagebox.showinfo('Error', "Please upload a template face image, or make sure the template is a face")
+            return
+
+        """
+        # do not create directory until directory can be created
+
+        # dictionary of (username, user's folder path)
+        destination_path = []
+        newly_created_folders = []
+
+        for key in self.imageDict:
+            new_folder_path = self.directory + "/" + key
+            if not os.path.isdir(new_folder_path):
+                os.mkdir(new_folder_path)
+                destination_path.append({key, new_folder_path})
+                newly_created_folders.append(key)
+            else:
+                # try make new folder but do let user know
+                i = 20
+                for num in range(0, i):
+                    new_folder_path = self.directory + "/" + key + str(num)
+                    if not os.path.isdir(new_folder_path):
+                        os.mkdir(new_folder_path)
+                        # folder_new_dirs.append(key+str(num))
+                        destination_path.append({key: new_folder_path})
+                        newly_created_folders.append(key + str(num))
+                        break
+                    if num == i - 1:
+                        messagebox.showinfo('Error', "Please re-upload face with unique folder name")
+
+        """
+        if the image has 2 or more faces:
+        option = 1 --> copy image to each users fold
+        option = 2 --> copy image to just 1 of them
+        """
+
+        for subdir, dirs, files in os.walk(self.directory):
+            for file in files:
+                # print os.path.join(subdir, file)
+                filepath = subdir + os.sep + file
+                if (imghdr.what(filepath) is not None):
+                    print(filepath)
+                    print(imghdr.what(filepath))
+
+                    move_file(option, self.imageDict, filepath, destination_path, self.user_name_list)
+
+        new_dirs_string = ""
+        for item in newly_created_folders:
+            new_dirs_string += item + ", "
+
+        messagebox.showinfo('Info', "The following directories have been created: " + new_dirs_string)
+
+    def select_directory(self):
+        self.directory = filedialog.askdirectory()
+        new_dir_label = "directory:  " + self.directory
+        self.directory_label.configure(text=new_dir_label)
+
+    def upload_face_image(self):
+        filename = filedialog.askopenfilename()
         try:
             self.upload_image_actual = Image.open(filename)
             known_image = face_recognition.load_image_file(filename)
@@ -49,13 +116,12 @@ class mainWindow:
     def upload_multiple_faces(self, known_image):
 
         curr_row = 0
-
         MAX_WIDTH = 400
         MAX_HEIGHT = 300
 
         # tuple: top right bottom left
         image_locations = face_recognition.face_locations(known_image)
-        encodings  = face_recognition.face_encodings(known_image)
+        encodings = face_recognition.face_encodings(known_image)
 
         self.popUp = Toplevel()
         self.popUp.geometry('800x800+300+300')
@@ -110,8 +176,6 @@ class mainWindow:
         # frame for name inputs
         frame_name_input = Frame(self.popUp)
 
-        
-
         for i in range(len(image_locations)):
             label = Label(frame_name_input, text="box " + color_map.get(i), font=TITLE_FONT, fg=color_map.get(i))
             label.grid(row=i, column=0, sticky=W)
@@ -123,7 +187,7 @@ class mainWindow:
         curr_row += 1
 
         Button(self.popUp, text='Okay!!!!',
-               command=lambda: self.submit_name(user_name_input, encodings))\
+               command=lambda: self.submit_name(user_name_input, encodings)) \
             .grid(row=curr_row)
 
         self.popUp.grab_set()
@@ -148,13 +212,12 @@ class mainWindow:
                 return
             input_set.add(current_input)
 
-
         for name in self.user_name_list:
             name.destroy()
 
         # better to separate into another loop
         for i in range(len(user_name_input)):
-            self.imageDict.update({user_name_input[i].get():image_encodings[i]})
+            self.imageDict.update({user_name_input[i].get(): image_encodings[i]})
 
             each_entry = Label(root, text=user_name_input[i].get(), font=TITLE_FONT)
             each_entry.grid(row=3 + i, column=1, sticky=W)
@@ -162,7 +225,6 @@ class mainWindow:
 
             pass
         self.popUp.destroy()
-
 
     def __init__(self, window):
         self.root = window
@@ -192,23 +254,31 @@ class mainWindow:
 
         self.user_name_list = []
 
-        self.random = Label(root, text='List of users:', font=TITLE_FONT)
+        self.random = Label(root, text='List of faces:', font=TITLE_FONT)
         self.random.grid(row=2, column=1, sticky=N)
 
-        self.sort_files =  Label(root, text='Select options', font=TITLE_FONT)
+        self.sort_files = Label(root, text='Select options', font=TITLE_FONT)
         self.sort_files.grid(row=2, column=2, sticky=N)
 
-        radio_mode = [("Allow duplicate", 'D'),("By Ranking", 'R')]
+        self.radio_response = IntVar()
 
-        radio_response = IntVar()
+        radio_allow_duplicate = Radiobutton(root, text="Copy image for each user", variable=self.radio_response,
+                                            value=1)
+        radio_allow_duplicate.grid(row=4 + 1, column=2, sticky=W)
 
-        radio_allow_duplicate = Radiobutton(root, text="Allow Duplicate", variable=radio_response, value=1)
-        radio_allow_duplicate.grid(row=3 + 1, column=2, sticky=W)
+        radio_by_ranking = Radiobutton(root, text="Decide which directory to save by user list",
+                                       variable=self.radio_response, value=2)
+        radio_by_ranking.grid(row=5 + 2, column=2, sticky=W)
 
-        radio_by_ranking = Radiobutton(root, text="By Ranking", variable=radio_response, value=2)
-        radio_by_ranking.grid(row=3 + 2, column=2, sticky=W)
+        self.directory = ""
+        select_directory_button = Button(root, text='Choose folder directory', command=self.select_directory)
+        select_directory_button.grid(row=8, column=2, sticky=N)
 
+        self.directory_label = Label(root, text='directory:')
+        self.directory_label.grid(row=9, column=2, sticky=W)
 
+        submit_button = Button(root, text='sort image!', command=self.sort_image)
+        submit_button.grid(row=10, column=2, sticky=W)
 
 
 root = Tk()
