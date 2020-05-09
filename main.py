@@ -25,8 +25,8 @@ color_map = {0: 'red', 1: 'blue', 2: 'green'}
 class mainWindow:
 
     def upload_face_image(self):
+        print(self.imageDict)
         filename = filedialog.askopenfilename()
-        print('Selected:', filename)
 
         try:
             self.upload_image_actual = Image.open(filename)
@@ -40,8 +40,6 @@ class mainWindow:
             if len(encoding) > TEMPLATE_FACE_LIMIT:
                 messagebox.showinfo('Error', TOO_MANY_FACE_WARNING)
                 return
-            # print(encoding)
-            # print(len(encoding))
         except PIL.UnidentifiedImageError:
             messagebox.showinfo('Error', INVALID_IMAGE_WARNING)
             return
@@ -57,18 +55,15 @@ class mainWindow:
 
         # tuple: top right bottom left
         image_locations = face_recognition.face_locations(known_image)
-        print(image_locations)
+        encodings  = face_recognition.face_encodings(known_image)
 
-        popUp = Toplevel()
-        popUp.geometry('800x800+300+300')
+        self.popUp = Toplevel()
+        self.popUp.geometry('800x800+300+300')
 
-        Label(popUp, text='For each person, provide name', font=TITLE_FONT).grid(row=curr_row, column=0, sticky=N)
+        Label(self.popUp, text='For each person, provide name', font=TITLE_FONT).grid(row=curr_row, column=0, sticky=N)
         curr_row += 1
 
         width, height = self.upload_image_actual.size
-
-        print(width)
-        print(height)
 
         new_width, new_height = correct_img_dimension(width, height, MAX_WIDTH, MAX_HEIGHT)
         new_width, new_height = int(new_width), int(new_height)
@@ -78,7 +73,7 @@ class mainWindow:
 
         tk_image = ImageTk.PhotoImage(input_image)
 
-        canvas = Canvas(popUp, width=width, height=height)
+        canvas = Canvas(self.popUp, width=width, height=height)
         canvas.img = tk_image
 
         image_offset_x = 20
@@ -103,62 +98,75 @@ class mainWindow:
         template_image.test = tk_image
         """
 
-        Label(popUp, text='Assign name for each square', font=TITLE_FONT).grid(row=2, column=0, sticky=W)
+        Label(self.popUp, text='Assign name for each square', font=TITLE_FONT).grid(row=2, column=0, sticky=W)
         curr_row += 1
 
         """ 
         generate input box
         """
         ## this is for keep track of inputs
-        # must make sure they are the same
-        labelArr = []
+        user_name_input = []
 
         # frame for name inputs
-        frame_name_input = Frame(popUp)
+        frame_name_input = Frame(self.popUp)
+
+        
+
         for i in range(len(image_locations)):
             label = Label(frame_name_input, text="box " + color_map.get(i), font=TITLE_FONT, fg=color_map.get(i))
             label.grid(row=i, column=0, sticky=W)
             entry = Entry(frame_name_input)
             entry.grid(row=i, column=1, sticky=W)
-            labelArr.append(entry)
+            user_name_input.append(entry)
 
         frame_name_input.grid(row=curr_row, column=0, sticky=W)
         curr_row += 1
 
-        Button(popUp, text='Okay!!!!', command=lambda: self.submit_name(labelArr)).grid(row=curr_row)
+        Button(self.popUp, text='Okay!!!!',
+               command=lambda: self.submit_name(user_name_input, encodings))\
+            .grid(row=curr_row)
 
-        print('--------')
-        print(len(labelArr))
-
-        popUp.grab_set()
+        self.popUp.grab_set()
 
         # for root
         self.upload_image_actual = self.upload_image_actual.resize((220, 280))
         self.upload_image_actual = ImageTk.PhotoImage(self.upload_image_actual)
+
         self.upload_image.configure(image=self.upload_image_actual)
         pass
 
-    def submit_name(self, arr):
-        print("test")
-        print(arr[0].get())
-
+    def submit_name(self, user_name_input, image_encodings):
         input_set = set()
-        for item in arr:
+        for item in user_name_input:
             current_input = item.get()
 
             if not current_input:
                 messagebox.showinfo('Error', "Name should not be empty!")
                 return
-
             if current_input in input_set:
                 messagebox.showinfo('Error', "Name should be unique!!!")
                 return
             input_set.add(current_input)
 
 
+        for name in self.user_name_list:
+            name.destroy()
+
+        # better to separate into another loop
+        for i in range(len(user_name_input)):
+            self.imageDict.update({user_name_input[i].get():image_encodings[i]})
+
+            each_entry = Label(root, text=user_name_input[i].get(), font=TITLE_FONT)
+            each_entry.grid(row=3 + i, column=1, sticky=W)
+            self.user_name_list.append(each_entry)
+
+            pass
+        self.popUp.destroy()
+
 
     def __init__(self, window):
         self.root = window
+        self.popUp = None
 
         # Title
         self.title = Label(root, text='Face Image Sorter', font=TITLE_FONT)
@@ -176,22 +184,35 @@ class mainWindow:
         self.template_image = ImageTk.PhotoImage(file="image/upload_template.png")
         self.upload_image = Label(self.root, image=self.template_image)
         self.upload_image.template_image = self.template_image
-        self.upload_image.grid(row=2, rowspan=3, column=0)
+        self.upload_image.grid(row=2, rowspan=15, column=0)
 
         # Upload Template
         upload_button = Button(root, text='Upload Face', command=self.upload_face_image)
         upload_button.grid()
 
-        self.random = Label(root, text='Random assortment', font=TITLE_FONT).grid(row=2, column=1, sticky=N)
-        Label(root, text='Random assortment', font=TITLE_FONT).grid(row=3, column=1, sticky=N)
-        Label(root, text='Random assortment', font=TITLE_FONT).grid(row=4, column=1, sticky=N)
+        self.user_name_list = []
+
+        self.random = Label(root, text='List of users:', font=TITLE_FONT)
+        self.random.grid(row=2, column=1, sticky=N)
+
+        self.sort_files =  Label(root, text='Select options', font=TITLE_FONT)
+        self.sort_files.grid(row=2, column=2, sticky=N)
+
+        radio_mode = [("Allow duplicate", 'D'),("By Ranking", 'R')]
+
+        radio_response = IntVar()
+
+        radio_allow_duplicate = Radiobutton(root, text="Allow Duplicate", variable=radio_response, value=1)
+        radio_allow_duplicate.grid(row=3 + 1, column=2, sticky=W)
+
+        radio_by_ranking = Radiobutton(root, text="By Ranking", variable=radio_response, value=2)
+        radio_by_ranking.grid(row=3 + 2, column=2, sticky=W)
+
+
 
 
 root = Tk()
 root.geometry("800x600+300+300")
-# root.grid_rowconfigure(0, minsize=50)  # Here
 mainWindow(root)
-# photo = ImageTk.PhotoImage(file="image/upload_template.png")
-# label = Label(image=photo).grid(row=0, column=0)
 
 root.mainloop()
