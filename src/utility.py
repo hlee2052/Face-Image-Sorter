@@ -1,5 +1,5 @@
 import face_recognition, os
-from shutil import copyfile
+from shutil import copyfile, move
 
 
 def correct_img_dimension(width, height, threshold_w, threshold_h):
@@ -72,4 +72,7 @@ def move_file(option, imageDict, filepath, dest_dirs, user_name_list):
                 if option == 2:  # if only want to copy to 1 user
                     return
 
-    # then delete all original items
+def delete_file(file):
+    if os.path.isfile(file):
+         os.remove(file)
+

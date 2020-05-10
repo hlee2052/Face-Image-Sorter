@@ -54,6 +54,9 @@ class mainWindow:
                 newly_created_folders.append(key)
             else:
                 destination_path.update({key: new_folder_path})
+                """
+                
+                """
 
                 """
                 # try make new folder but do let user know
@@ -76,6 +79,7 @@ class mainWindow:
         option = 2 --> copy image to just 1 of them
         """
 
+
         for currPath, dirs, files in os.walk(self.directory):
             for file in files:
                 filepath = os.path.join(currPath, file)
@@ -86,7 +90,9 @@ class mainWindow:
         for item in newly_created_folders:
             new_dirs_string += item + ", "
 
-        messagebox.showinfo('Info', "The following directories have been created: " + new_dirs_string)
+        if new_dirs_string:
+            messagebox.showinfo('Info', "The following directories have been created: " + new_dirs_string)
+
 
     def select_directory(self):
         self.directory = filedialog.askdirectory()
@@ -186,7 +192,7 @@ class mainWindow:
         frame_name_input.grid(row=curr_row, column=0, sticky=W)
         curr_row += 1
 
-        Button(self.popUp, text='Okay!!!!',
+        Button(self.popUp, text='Select',
                command=lambda: self.submit_name(self.user_name_input, encodings)) \
             .grid(row=curr_row)
 
@@ -294,6 +300,7 @@ class mainWindow:
 
 root = Tk()
 root.geometry("800x600+300+300")
+root.title('Face Image Sorter')
 mainWindow(root)
 
 root.mainloop()
