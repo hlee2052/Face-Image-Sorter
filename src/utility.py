@@ -41,13 +41,6 @@ def move_file(option, imageDict, filepath, dest_dirs, user_name_list):
     :return: list of users which the image file belongs
     """
 
-    """
-    1. let curr =   load image from filepath:
-    2.  compare (curr with every items in imageDict's encoding)
-       --> if match, then move file to destination
-        (to get destination, get it from dest_dirs map)
-        --> 
-    """
     curr_image = face_recognition.load_image_file(filepath)
 
     # this may contain 0 or more faces
@@ -72,7 +65,7 @@ def move_file(option, imageDict, filepath, dest_dirs, user_name_list):
                 if option == 2:  # if only want to copy to 1 user
                     return
 
+
 def delete_file(file):
     if os.path.isfile(file):
-         os.remove(file)
-
+        os.remove(file)

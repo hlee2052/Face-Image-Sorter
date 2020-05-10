@@ -1,11 +1,9 @@
-from tkinter import *
-import tkinter.font as tkFont
 import imghdr
-import PIL
-from PIL import ImageTk, Image
+from tkinter import *
 from tkinter import filedialog, messagebox
 
-import face_recognition, os
+import PIL
+from PIL import ImageTk, Image
 
 from src.utility import *
 
@@ -22,12 +20,11 @@ TEMPLATE_FACE_LIMIT = 3
 color_map = {0: 'red', 1: 'blue', 2: 'green'}
 
 
-class mainWindow:
+class main_window:
 
     def sort_image(self):
         option = self.radio_response.get()
 
-        """
         if option == 0:
             messagebox.showinfo('Error', "Please select an option to see if duplicate is allowed")
             return
@@ -39,10 +36,6 @@ class mainWindow:
             messagebox.showinfo('Error', "Please upload a template face image, or make sure the template is a face")
             return
 
-        """
-        # do not create directory until directory can be created
-
-        # dictionary of (username, user's folder path)
         destination_path = {}
         newly_created_folders = []
 
@@ -54,31 +47,6 @@ class mainWindow:
                 newly_created_folders.append(key)
             else:
                 destination_path.update({key: new_folder_path})
-                """
-                
-                """
-
-                """
-                # try make new folder but do let user know
-                i = 20
-                for num in range(0, i):
-                    new_folder_path = self.directory + "/" + key + str(num)
-                    if not os.path.isdir(new_folder_path):
-                        os.mkdir(new_folder_path)
-                        # folder_new_dirs.append(key+str(num))
-                        destination_path.update({key: new_folder_path})
-                        newly_created_folders.append(key + str(num))
-                        break
-                    if num == i - 1:
-                        messagebox.showinfo('Error', "Please re-upload face with unique folder name")
-                 """
-
-        """
-        if the image has 2 or more faces:
-        option = 1 --> copy image to each users fold
-        option = 2 --> copy image to just 1 of them
-        """
-
 
         for currPath, dirs, files in os.walk(self.directory):
             for file in files:
@@ -131,6 +99,7 @@ class mainWindow:
 
         self.popUp = Toplevel()
         self.popUp.geometry('800x800+300+300')
+        self.popUp.title('Label the input')
 
         Label(self.popUp, text='For each person, provide name', font=TITLE_FONT).grid(row=curr_row, column=0, sticky=N)
         curr_row += 1
@@ -153,7 +122,6 @@ class mainWindow:
 
         canvas.create_image(0, 0, anchor=NW, image=tk_image)
         # x1,y1,x2,y2.  left top right bottom
-
         for i in range(len(image_locations)):
             left = image_locations[i][3]
             right = image_locations[i][1]
@@ -164,19 +132,12 @@ class mainWindow:
         canvas.grid(row=curr_row, column=0, columnspan=2)
         curr_row += 1
 
-        """
-        template_image = Label(popUp, image=tk_image)
-        template_image.grid(row=1, column=0)
-        template_image.test = tk_image
-        """
-
-        Label(self.popUp, text='Assign name for each square', font=TITLE_FONT).grid(row=2, column=0, sticky=W)
+        Label(self.popUp, text='Assign name(the target folder) for each square', font=TITLE_FONT).grid(row=2, column=0, sticky=W)
         curr_row += 1
 
         """ 
         generate input box
         """
-        ## this is for keep track of inputs
         self.user_name_input = []
 
         # frame for name inputs
@@ -203,7 +164,6 @@ class mainWindow:
         self.upload_image_actual = ImageTk.PhotoImage(self.upload_image_actual)
 
         self.upload_image.configure(image=self.upload_image_actual)
-        pass
 
     def submit_name(self, user_name_input, image_encodings):
         input_set = set()
@@ -229,7 +189,6 @@ class mainWindow:
         self.imageDict = {}
         self.user_names_string = tmp_user_list;
 
-        # better to separate into another loop
         for i in range(len(user_name_input)):
             self.imageDict.update({user_name_input[i].get(): image_encodings[i]})
 
@@ -272,7 +231,7 @@ class mainWindow:
         self.random = Label(root, text='List of faces:', font=TITLE_FONT)
         self.random.grid(row=2, column=1, sticky=N)
 
-        self.sort_files = Label(root, text='Select options', font=TITLE_FONT)
+        self.sort_files = Label(root, text='Select options:', font=TITLE_FONT)
         self.sort_files.grid(row=2, column=2, sticky=N)
 
         self.radio_response = IntVar()
@@ -292,7 +251,7 @@ class mainWindow:
         self.directory_label = Label(root, text='directory:')
         self.directory_label.grid(row=9, column=2, sticky=W)
 
-        submit_button = Button(root, text='sort image!', command=self.sort_image)
+        submit_button = Button(root, text='Sort image!', command=self.sort_image)
         submit_button.grid(row=10, column=2, sticky=W)
 
         self.user_names_string = []
@@ -301,6 +260,6 @@ class mainWindow:
 root = Tk()
 root.geometry("800x600+300+300")
 root.title('Face Image Sorter')
-mainWindow(root)
+main_window(root)
 
 root.mainloop()
