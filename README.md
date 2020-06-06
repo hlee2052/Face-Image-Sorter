@@ -6,6 +6,9 @@ Example: You have 1000s of images of politicians. If you want to categorize imag
 - GUI created with tkinter
 - face_recognition library used to extract and compare facial features
 
+![gifmovie](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo-face-image.gif)
+
+
 ## Instruction
 
 Run the script with:
@@ -29,6 +32,5 @@ python main.py
 ![demo4](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo4.png)
 ![demo5](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo5.png)
 
-![gifmovie](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo-face-image.gif)
 
 
