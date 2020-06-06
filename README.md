@@ -1,6 +1,6 @@
 # Face Image Sorter
 
-A python program to copy images to different folders based on face-features, without having to manually go through each images by hands.
+A python program to copy images to different folders based on face-features, without having to manually go through each image manually.
 
 - created GUI with tkinter
 - face_recognition library used to extract and compare facial features
@@ -17,7 +17,7 @@ python main.py
 
 ## Usage
 
-1. Upload the template face (can contain at most 3 faces on image, but recommended to best face image for template).
+1. Upload the template face (can contain at most 3 faces on image, but it is recommended to use the best face image for the template).
 2. Label the each face on template with name, which is the directory which image is going to be saved.
 3. Select the folder which contains the images to be sorted.
 4. Select the option to see if images are to be only saved to 1 folder. For example, if a single template image has face of Trump and Biden, and if the target image(s) has both Trump and Biden, then choose whether save this image to BOTH Trump and Biden directory, or only save to one of them.
