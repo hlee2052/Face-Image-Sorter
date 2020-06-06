@@ -1,8 +1,5 @@
 import imghdr
 from tkinter import *
-from tkinter import filedialog, messagebox
-
-import PIL
 from PIL import ImageTk, Image
 
 from src.utility import *
@@ -18,7 +15,6 @@ TOO_MANY_FACE_WARNING = 'Please choose an image with at most 3 faces'
 TEMPLATE_FACE_LIMIT = 3
 
 color_map = {0: 'red', 1: 'blue', 2: 'green'}
-
 
 class main_window:
 
@@ -49,10 +45,13 @@ class main_window:
                 destination_path.update({key: new_folder_path})
 
         for currPath, dirs, files in os.walk(self.directory):
-            for file in files:
-                filepath = os.path.join(currPath, file)
-                if imghdr.what(filepath) is not None:
-                    move_file(option, self.imageDict, filepath, destination_path, self.user_names_string)
+            for eachDir in dirs:
+                # Do not visit or process any items in the target folder
+                if eachDir not in self.imageDict:
+                    for file in files:
+                        filepath = os.path.join(currPath, file)
+                        if imghdr.what(filepath) is not None:
+                            move_file(option, self.imageDict, filepath, destination_path, self.user_names_string)
 
         new_dirs_string = ""
         for item in newly_created_folders:
