@@ -21,3 +21,14 @@ python main.py
 4. Select the option to see if images are to be only saved to 1 folder. For example, if a single template image has face of Trump and Biden, and if the target image(s) has both Trump and Biden, then choose whether save this image to BOTH Trump and Biden directory, or only save to one of them.
 5. Press sort image to sort images.
  
+## ScreenShots
+
+![demo1](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo1.png)
+![demo2](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo2.png)
+![demo3](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo3.png)
+![demo4](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo4.png)
+![demo5](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo5.png)
+
+![gifmovie](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo-face-image.gif)
+
+
