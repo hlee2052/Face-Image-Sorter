@@ -1,5 +1,7 @@
 import imghdr
 from tkinter import *
+from tkinter import filedialog, messagebox
+import PIL
 from PIL import ImageTk, Image
 
 from src.utility import *
@@ -13,6 +15,9 @@ INVALID_IMAGE_WARNING = 'Please choose an image file!'
 
 TOO_MANY_FACE_WARNING = 'Please choose an image with at most 3 faces'
 TEMPLATE_FACE_LIMIT = 3
+
+MAX_WIDTH = 400
+MAX_HEIGHT = 300
 
 color_map = {0: 'red', 1: 'blue', 2: 'green'}
 
@@ -89,8 +94,7 @@ class main_window:
     def upload_multiple_faces(self, known_image):
 
         curr_row = 0
-        MAX_WIDTH = 400
-        MAX_HEIGHT = 300
+
 
         # tuple: top right bottom left
         image_locations = face_recognition.face_locations(known_image)
@@ -239,7 +243,7 @@ class main_window:
                                             value=1)
         radio_allow_duplicate.grid(row=4 + 1, column=2, sticky=W)
 
-        radio_by_ranking = Radiobutton(root, text="Decide which directory to save by user list",
+        radio_by_ranking = Radiobutton(root, text="Store to only a person's folder",
                                        variable=self.radio_response, value=2)
         radio_by_ranking.grid(row=5 + 2, column=2, sticky=W)
 
@@ -255,10 +259,10 @@ class main_window:
 
         self.user_names_string = []
 
-
 root = Tk()
 root.geometry("800x600+300+300")
 root.title('Face Image Sorter')
+root.resizable(False, False)
 main_window(root)
 
 root.mainloop()
