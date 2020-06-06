@@ -1,13 +1,12 @@
 # Face Image Sorter
 
-A python program to sort images to different folder based on face-features, without having to manually go through each images in person.
-Example: You have 1000s of images of politicians. If you want to categorize images by certain feature(eg, Trump), then this program will allow you to copy all Trump images to a folder.
+A python program to copy images to different folders based on face-features, without having to manually go through each images by hands.
 
-- GUI created with tkinter
+- created GUI with tkinter
 - face_recognition library used to extract and compare facial features
 
+Demo of sorting images to different folders
 ![gifmovie](https://github.com/hlee2052/Face-Image-Sorter/blob/master/screenshot/demo-face-image.gif)
-
 
 ## Instruction
 
